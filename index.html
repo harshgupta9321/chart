@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dynamic Line Chart Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <canvas id="myLineChart" width="400" height="200"></canvas>
+    <button onclick="updateChart()">Update Chart</button>
+
+    <script>
+        var chart; // Initialize a variable to store the chart instance.
+
+        // Function to create or update the chart
+        function createOrUpdateChart(data) {
+            if (chart) {
+                // If the chart instance already exists, update its data.
+                chart.data.datasets[0].data = data;
+                chart.update();
+            } else {
+                // If the chart instance doesn't exist, create a new chart.
+                var ctx = document.getElementById('myLineChart').getContext('2d');
+                chart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ["1 st week", "2nd week", "3rd week", "4th week", "5th week"],
+                        datasets: [{
+                            label: "Sample Data",
+                            data: data,
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1,
+                            fill: false
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        // Function to update the chart with new random data
+        function updateChart() {
+            var newData = [Math.floor(Math.random() * 20), Math.floor(Math.random() * 20), Math.floor(Math.random() * 20), Math.floor(Math.random() * 20), Math.floor(Math.random() * 20)];
+            createOrUpdateChart(newData);
+        }
+
+        // Initial chart creation with default data
+        createOrUpdateChart([12, 19, 3, 5, 2]);
+    </script>
+</body>
+</html>
